@@ -1,0 +1,28 @@
+{
+  "name": "@hestudy/next-editor",
+  "version": "0.0.1",
+  "main": "src/index.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/react": "^18.3.4",
+    "@types/react-dom": "^18.3.0",
+    "tsup": "^8.2.4",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@lexical/react": "^0.17.0",
+    "lexical": "^0.17.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}
