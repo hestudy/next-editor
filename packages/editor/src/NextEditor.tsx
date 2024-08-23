@@ -4,35 +4,34 @@ import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
-
-const theme = {
-  // Theme styling goes here
-  //...
-};
-
-// Catch any errors that occur during Lexical updates and log them
-// or throw them as needed. If you don't throw them, Lexical will
-// try to recover gracefully without losing user data.
-function onError(error: any) {
-  console.error(error);
-}
+import { SlashNode } from "./nodes/SlashNode";
+import DevPlugin from "./plugins/DevPlugin";
+import SlashPlugin from "./plugins/SlashPlugin";
 
 function NextEditor() {
-  const initialConfig = {
-    namespace: "MyEditor",
-    theme,
-    onError,
-  };
-
   return (
-    <LexicalComposer initialConfig={initialConfig}>
+    <LexicalComposer
+      initialConfig={{
+        namespace: "NextEditor",
+        onError(error) {
+          console.error(error);
+        },
+        nodes: [SlashNode],
+      }}
+    >
       <RichTextPlugin
-        contentEditable={<ContentEditable />}
-        placeholder={<div>Enter some text...</div>}
+        contentEditable={
+          <ContentEditable className="focus-visible:outline-none relative" />
+        }
+        placeholder={
+          <div className="absolute top-4 text-gray-500">输入/插入块</div>
+        }
         ErrorBoundary={LexicalErrorBoundary}
       />
       <HistoryPlugin />
       <AutoFocusPlugin />
+      <DevPlugin></DevPlugin>
+      <SlashPlugin></SlashPlugin>
     </LexicalComposer>
   );
 }
