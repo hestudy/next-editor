@@ -24,7 +24,7 @@ function NextEditor() {
           <ContentEditable className="focus-visible:outline-none relative" />
         }
         placeholder={
-          <div className="absolute top-4 text-gray-500">输入/插入块</div>
+          <div className="absolute top-4 text-gray-500 -z-10">输入/插入块</div>
         }
         ErrorBoundary={LexicalErrorBoundary}
       />

@@ -1,12 +1,8 @@
-import {
-  EditorConfig,
-  LexicalEditor,
-  LexicalNode,
-  SerializedTextNode,
-  TextNode,
-} from "lexical";
+import { Slash } from "@/components/Slash";
+import { DecoratorNode, LexicalNode, NodeKey } from "lexical";
+import { ReactNode } from "react";
 
-export class SlashNode extends TextNode {
+export class SlashNode extends DecoratorNode<ReactNode> {
   static getType(): string {
     return "slash";
   }
@@ -15,32 +11,29 @@ export class SlashNode extends TextNode {
     return new SlashNode(node.__key);
   }
 
-  constructor(key?: string) {
-    super(key || "");
+  constructor(key?: NodeKey) {
+    super(key);
   }
 
-  createDOM(config: EditorConfig, editor?: LexicalEditor): HTMLElement {
-    const span = document.createElement("span");
-    span.textContent = this.__key;
-    return span;
+  createDOM(): HTMLElement {
+    return document.createElement("span");
   }
 
-  static importJSON(serializedNode: SerializedTextNode): TextNode {
-    return $createSlashNode();
+  updateDOM(): false {
+    return false;
   }
 
-  exportJSON(): SerializedTextNode {
-    return {
-      ...super.exportJSON(),
-      type: "slash",
-    };
+  decorate(): ReactNode {
+    return <Slash></Slash>;
   }
 }
 
-export const $createSlashNode = (key?: string) => {
-  return new SlashNode(key);
-};
+export function $createSlashNode(): SlashNode {
+  return new SlashNode();
+}
 
-export const $isSlashNode = (node?: LexicalNode | null): node is SlashNode => {
+export function $isSlashNode(
+  node: LexicalNode | null | undefined
+): node is SlashNode {
   return node instanceof SlashNode;
-};
+}
