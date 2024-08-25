@@ -1,6 +1,6 @@
-import { $createSlashNode } from "@/nodes/SlashNode";
+import { $createSlashNode, SlashNode } from "@/nodes/SlashNode";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { $insertNodes, TextNode } from "lexical";
+import { $createTextNode, $insertNodes, TextNode } from "lexical";
 import { useEffect } from "react";
 
 const SlashPlugin = () => {
@@ -17,7 +17,12 @@ const SlashPlugin = () => {
   }, []);
 
   useEffect(() => {
-    return editor.registerNodeTransform(TextNode, (node) => {});
+    return editor.registerNodeTransform(SlashNode, (node) => {
+      const nextSibling = node.getNextSibling();
+      if (nextSibling) {
+        node.replace($createTextNode("/"));
+      }
+    });
   }, []);
 
   return <></>;
